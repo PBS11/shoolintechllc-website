@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timesheet Entry - ShoolinTech LLC</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .navbar-menu {
+            display: flex;
+            gap: 20px;
+        }
+
+        .navbar-menu a {
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .navbar-menu a:hover {
+            opacity: 0.8;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .header h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .week-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+
+        .week-dates {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .week-nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-nav {
+            padding: 8px 15px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: background 0.3s;
+        }
+
+        .btn-nav:hover {
+            background: #764ba2;
+        }
+
+        .message {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .message.error {
+            background: #fee;
+            color: #c33;
+            display: block;
+        }
+
+        .message.success {
+            background: #efe;
+            color: #3c3;
+            display: block;
+        }
+
+        .timesheet-table {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+
+        .table-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+        }
+
+        .table-header h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: #f9f9f9;
+            border-bottom: 2px solid #ddd;
+        }
+
+        th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+        }
+
+        tbody tr:hover {
+            background: #f9f9f9;
+        }
+
+        .day-cell {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .weekend {
+            background: #f5f5f5;
+        }
+
+        .holiday-row {
+            background: #fff9e6;
+        }
+
+        .holiday-badge {
+            display: inline-block;
+            background: #ffc107;
+            color: #000;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        input[type="number"],
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        input[type="number"]:focus,
+        input[type="text"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.2);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 50px;
+        }
+
+        .disabled-input {
+            background: #f5f5f5;
+            cursor: not-allowed;
+            color: #999;
+        }
+
+        .summary-section {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .summary-card {
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 5px;
+            border-left: 4px solid #667eea;
+        }
+
+        .summary-label {
+            font-size: 12px;
+            color: #666;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .summary-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .actions-section {
+            display: flex;
+            gap: 10px;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .btn-primary,
+        .btn-secondary,
+        .btn-danger {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-primary:hover,
+        .btn-secondary:hover,
+        .btn-danger:hover {
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:disabled,
+        .btn-secondary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            color: #0c5460;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .week-info {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .actions-section {
+                flex-direction: column;
+            }
+
+            .btn-primary,
+            .btn-secondary,
+            .btn-danger {
+                width: 100%;
+            }
+
+            table {
+                font-size: 12px;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+
+            input[type="number"],
+            input[type="text"],
+            textarea {
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">ShoolinTech LLC - Timesheet Entry</div>
+        <div class="navbar-menu">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="#" onclick="logout()">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div id="message" class="message"></div>
+
+        <div class="header">
+            <h1>Weekly Timesheet Entry</h1>
+            <div class="week-info">
+                <div>
+                    <div class="week-dates">
+                        Week of <strong id="weekDisplay">Loading...</strong>
+                    </div>
+                </div>
+                <div class="week-nav">
+                    <button class="btn-nav" onclick="previousWeek()">← Previous Week</button>
+                    <button class="btn-nav" onclick="currentWeek()">Current Week</button>
+                    <button class="btn-nav" onclick="nextWeek()">Next Week →</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-box">
+            <strong>ℹ️ Note:</strong> Weekends and federal holidays are marked and cannot be edited. 
+            Enter your working hours for regular business days and provide project details.
+        </div>
+
+        <div id="timesheetContainer" class="loading">
+            <div class="spinner"></div>
+            <p>Loading timesheet...</p>
+        </div>
+
+        <div id="timesheetContent"></div>
+    </div>
+
+    <script>
+        let currentWeekStart = getMonday(new Date());
+        let timesheetId = null;
+
+        // Load timesheet on page load
+        document.addEventListener('DOMContentLoaded', async () => {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                window.location.href = '/login.html';
+                return;
+            }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+            if (id) {
+                timesheetId = id;
+            }
+
+            await loadTimesheet();
+        });
+
+        function getMonday(date = new Date()) {
+            const d = new Date(date);
+            const day = d.getDay();
+            const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+            return new Date(d.setDate(diff));
+        }
+
+        function previousWeek() {
+            currentWeekStart = new Date(currentWeekStart);
+            currentWeekStart.setDate(currentWeekStart.getDate() - 7);
+            timesheetId = null;
+            loadTimesheet();
+        }
+
+        function nextWeek() {
+            currentWeekStart = new Date(currentWeekStart);
+            currentWeekStart.setDate(currentWeekStart.getDate() + 7);
+            timesheetId = null;
+            loadTimesheet();
+        }
+
+        function currentWeek() {
+            currentWeekStart = getMonday();
+            timesheetId = null;
+            loadTimesheet();
+        }
+
+        async function loadTimesheet() {
+            try {
+                const token = localStorage.getItem('token');
+                const container = document.getElementById('timesheetContainer');
+                
+                // Update week display
+                const weekEnd = new Date(currentWeekStart);
+                weekEnd.setDate(weekEnd.getDate() + 6);
+                document.getElementById('weekDisplay').textContent = 
+                    `${currentWeekStart.toLocaleDateString()} - ${weekEnd.toLocaleDateString()}`;
+
+                // Try to fetch existing timesheet
+                let timesheet = null;
+                if (!timesheetId) {
+                    const response = await fetch(`/api/timesheet/${currentWeekStart.toISOString().split('T')[0]}`, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+
+                    if (response.ok) {
+                        timesheet = await response.json();
+                        timesheetId = timesheet._id;
+                    }
+                } else {
+                    const response = await fetch(`/api/timesheet/${timesheetId}`, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+
+                    if (response.ok) {
+                        timesheet = await response.json();
+                    }
+                }
+
+                if (!timesheet) {
+                    // Initialize new timesheet
+                    const response = await fetch('/api/timesheet/initialize', {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ weekStartDate: currentWeekStart })
+                    });
+
+                    if (response.ok) {
+                        timesheet = (await response.json()).timesheet;
+                        timesheetId = timesheet._id;
+                    } else {
+                        throw new Error('Failed to initialize timesheet');
+                    }
+                }
+
+                renderTimesheet(timesheet);
+            } catch (error) {
+                document.getElementById('timesheetContainer').innerHTML = 
+                    `<p style="color: #c33;">Error: ${error.message}</p>`;
+                console.error('Error:', error);
+            }
+        }
+
+        function renderTimesheet(timesheet) {
+            const container = document.getElementById('timesheetContainer');
+            container.innerHTML = '';
+
+            const isEditable = timesheet.status === 'draft' || timesheet.status === 'rejected';
+
+            let html = `
+                <div class="timesheet-table">
+                    <div class="table-header">
+                        <h2>📋 Timesheet Entries</h2>
+                        <p style="font-size: 12px; opacity: 0.9;">Employee: ${timesheet.employeeName} (${timesheet.employeeId})</p>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Day</th>
+                                <th>Hours</th>
+                                <th>Project Code</th>
+                                <th>Task Description</th>
+                                <th>Notes</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+
+            timesheet.entries.forEach((entry, index) => {
+                const date = new Date(entry.date);
+                const rowClass = entry.isWeekend ? 'weekend' : entry.isHoliday ? 'holiday-row' : '';
+                const isDisabled = entry.isWeekend || entry.isHoliday || !isEditable;
+
+                html += `
+                    <tr class="${rowClass}">
+                        <td>${date.toLocaleDateString()}</td>
+                        <td class="day-cell">
+                            ${entry.dayOfWeek}
+                            ${entry.isHoliday ? `<span class="holiday-badge">${entry.holidayName}</span>` : ''}
+                        </td>
+                        <td>
+                            <input type="number" min="0" max="24" 
+                                ${isDisabled ? 'class="disabled-input" disabled' : 'id="hours_' + index + '"'}
+                                value="${entry.hoursWorked}"
+                                onchange="updateEntry(${index}, this.value, 'hoursWorked')">
+                        </td>
+                        <td>
+                            <input type="text" 
+                                ${isDisabled ? 'class="disabled-input" disabled' : 'id="project_' + index + '"'}
+                                value="${entry.projectCode}"
+                                placeholder="e.g., PROJ-001"
+                                onchange="updateEntry(${index}, this.value, 'projectCode')">
+                        </td>
+                        <td>
+                            <input type="text" 
+                                ${isDisabled ? 'class="disabled-input" disabled' : 'id="task_' + index + '"'}
+                                value="${entry.taskDescription}"
+                                placeholder="Describe your work"
+                                onchange="updateEntry(${index}, this.value, 'taskDescription')">
+                        </td>
+                        <td>
+                            <input type="text" 
+                                ${isDisabled ? 'class="disabled-input" disabled' : 'id="notes_' + index + '"'}
+                                value="${entry.notes}"
+                                placeholder="Additional notes"
+                                onchange="updateEntry(${index}, this.value, 'notes')">
+                        </td>
+                        <td>
+                            ${entry.isWeekend ? '🚫 Weekend' : entry.isHoliday ? '🎉 Holiday' : '✅ Regular'}
+                        </td>
+                    </tr>
+                `;
+            });
+
+            html += `
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="summary-section">
+                    <h3>Summary</h3>
+                    <div class="summary-grid">
+                        <div class="summary-card">
+                            <div class="summary-label">Total Hours Worked</div>
+                            <div class="summary-value">${timesheet.totalHoursWorked}</div>
+                        </div>
+                        <div class="summary-card">
+                            <div class="summary-label">Holidays This Week</div>
+                            <div class="summary-value">${timesheet.totalHolidaysInWeek}</div>
+                        </div>
+                        <div class="summary-card">
+                            <div class="summary-label">Status</div>
+                            <div class="summary-value" style="text-transform: capitalize;">${timesheet.status}</div>
+                        </div>
+                        <div class="summary-card">
+                            <div class="summary-label">Working Days</div>
+                            <div class="summary-value">${timesheet.entries.filter(e => !e.isWeekend && !e.isHoliday).length}</div>
+                        </div>
+                    </div>
+                    ${timesheet.comments ? `<p style="margin-top: 15px; padding: 10px; background: #fff3cd; border-radius: 5px;"><strong>Comments:</strong> ${timesheet.comments}</p>` : ''}
+                </div>
+
+                <div class="actions-section">
+                    <button class="btn-secondary" onclick="goToDashboard()">Back to Dashboard</button>
+                    ${isEditable ? `<button class="btn-primary" onclick="submitTimesheet('${timesheetId}')">Submit Timesheet</button>` : ''}
+                </div>
+            `;
+
+            document.getElementById('timesheetContent').innerHTML = html;
+        }
+
+        async function updateEntry(index, value, field) {
+            // This would be updated to send to server
+            // For now, it's a local update that gets saved on submit
+        }
+
+        async function submitTimesheet(id) {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch(`/api/timesheet/${id}/submit`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showMessage('Timesheet submitted successfully!', 'success');
+                    setTimeout(() => window.location.href = '/dashboard.html', 1500);
+                } else {
+                    showMessage(data.error || 'Failed to submit timesheet', 'error');
+                }
+            } catch (error) {
+                showMessage('Error: ' + error.message, 'error');
+            }
+        }
+
+        function goToDashboard() {
+            window.location.href = '/dashboard.html';
+        }
+
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('employeeId');
+            localStorage.removeItem('employee');
+            window.location.href = '/login.html';
+        }
+
+        function showMessage(message, type) {
+            const msgDiv = document.getElementById('message');
+            msgDiv.textContent = message;
+            msgDiv.className = `message ${type}`;
+        }
+    </script>
+</body>
+</html>

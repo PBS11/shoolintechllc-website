@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  shoolintech-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: shoolintech-website
+    ports:
+      - "8000:8000"
+    environment:
+      - NODE_ENV=production
+      - PORT=8000
+      - MONGODB_URI=${MONGODB_URI:-mongodb://localhost:27017/shoolintechllc}
+      - JWT_SECRET=${JWT_SECRET:-your-secret-key-change-in-production}
+    volumes:
+      - .:/app
+      - /app/node_modules
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8000', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+
+  # Optional: MongoDB service (uncomment if you want MongoDB to run in Docker)
+  # mongodb:
+  #   image: mongo:6
+  #   container_name: shoolintech-mongodb
+  #   ports:
+  #     - "27017:27017"
+  #   volumes:
+  #     - mongodb_data:/data/db
+  #   environment:
+  #     - MONGO_INITDB_ROOT_USERNAME=admin
+  #     - MONGO_INITDB_ROOT_PASSWORD=password
+  #   restart: unless-stopped
+
+# volumes:
+#   mongodb_data:
