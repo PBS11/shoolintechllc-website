@@ -1,0 +1,105 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Gradient definitions -->
+  <defs>
+    <linearGradient id="gradientBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0066cc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0052a3;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="gradientOrange" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff6b35;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e55100;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="gradientRadial" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#00ccff;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#0066cc;stop-opacity:0" />
+    </radialGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="shadow">
+      <feDropShadow dx="2" dy="2" stdDeviation="2" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- Background circle with gradient border -->
+  <circle cx="100" cy="100" r="98" fill="#ffffff" stroke="url(#gradientBlue)" stroke-width="3"/>
+  <circle cx="100" cy="100" r="95" fill="url(#gradientRadial)" opacity="0.5"/>
+  
+  <!-- Main trident handle - thicker and more prominent -->
+  <line x1="100" y1="20" x2="100" y2="170" stroke="url(#gradientBlue)" stroke-width="8" stroke-linecap="round" filter="url(#glow)"/>
+  
+  <!-- Decorative rings on handle -->
+  <circle cx="100" cy="55" r="12" fill="none" stroke="url(#gradientOrange)" stroke-width="2" opacity="0.6"/>
+  <circle cx="100" cy="100" r="12" fill="none" stroke="url(#gradientBlue)" stroke-width="2" opacity="0.6"/>
+  <circle cx="100" cy="145" r="12" fill="none" stroke="url(#gradientOrange)" stroke-width="2" opacity="0.6"/>
+  
+  <!-- Left prong - curved and detailed -->
+  <g filter="url(#shadow)">
+    <path d="M 100 60 Q 50 85 40 130" stroke="url(#gradientBlue)" stroke-width="7" stroke-linecap="round" fill="none"/>
+    <circle cx="40" cy="130" r="10" fill="url(#gradientOrange)" filter="url(#glow)"/>
+    <!-- Accent marks on left prong -->
+    <circle cx="75" cy="78" r="2" fill="#ff6b35" opacity="0.8"/>
+    <circle cx="55" cy="105" r="2" fill="#ff6b35" opacity="0.8"/>
+    <circle cx="45" cy="120" r="2" fill="#ff6b35" opacity="0.8"/>
+  </g>
+  
+  <!-- Right prong - curved and detailed -->
+  <g filter="url(#shadow)">
+    <path d="M 100 60 Q 150 85 160 130" stroke="url(#gradientBlue)" stroke-width="7" stroke-linecap="round" fill="none"/>
+    <circle cx="160" cy="130" r="10" fill="url(#gradientOrange)" filter="url(#glow)"/>
+    <!-- Accent marks on right prong -->
+    <circle cx="125" cy="78" r="2" fill="#ff6b35" opacity="0.8"/>
+    <circle cx="145" cy="105" r="2" fill="#ff6b35" opacity="0.8"/>
+    <circle cx="155" cy="120" r="2" fill="#ff6b35" opacity="0.8"/>
+  </g>
+  
+  <!-- Center prong - longer and more prominent -->
+  <g filter="url(#shadow)">
+    <line x1="100" y1="60" x2="100" y2="165" stroke="url(#gradientBlue)" stroke-width="9" stroke-linecap="round"/>
+    <circle cx="100" cy="165" r="12" fill="url(#gradientOrange)" filter="url(#glow)"/>
+    <!-- Vertical accent dots on center prong -->
+    <circle cx="100" cy="85" r="2.5" fill="#ff6b35" opacity="0.9"/>
+    <circle cx="100" cy="115" r="2.5" fill="#ff6b35" opacity="0.9"/>
+    <circle cx="100" cy="145" r="2.5" fill="#ff6b35" opacity="0.9"/>
+  </g>
+  
+  <!-- Top crown point -->
+  <g filter="url(#glow)">
+    <polygon points="100,15 92,32 108,32" fill="url(#gradientOrange)"/>
+    <polygon points="100,20 95,28 105,28" fill="#ffffff" opacity="0.7"/>
+  </g>
+  
+  <!-- Energy rings around trident -->
+  <circle cx="100" cy="100" r="70" fill="none" stroke="url(#gradientBlue)" stroke-width="1.5" opacity="0.2" stroke-dasharray="10,5"/>
+  <circle cx="100" cy="100" r="85" fill="none" stroke="url(#gradientOrange)" stroke-width="1" opacity="0.15" stroke-dasharray="8,4"/>
+  
+  <!-- Tech network nodes at strategic points -->
+  <g filter="url(#glow)">
+    <circle cx="100" cy="35" r="5" fill="#0066cc" opacity="0.7"/>
+    <circle cx="55" cy="100" r="4" fill="#ff6b35" opacity="0.6"/>
+    <circle cx="145" cy="100" r="4" fill="#ff6b35" opacity="0.6"/>
+    <circle cx="100" cy="175" r="5" fill="#0066cc" opacity="0.7"/>
+  </g>
+  
+  <!-- Connecting network lines -->
+  <line x1="100" y1="35" x2="100" y2="60" stroke="url(#gradientBlue)" stroke-width="1" opacity="0.4"/>
+  <line x1="100" y1="165" x2="100" y2="175" stroke="url(#gradientBlue)" stroke-width="1" opacity="0.4"/>
+  <line x1="55" y1="100" x2="100" y2="75" stroke="url(#gradientOrange)" stroke-width="0.8" opacity="0.3"/>
+  <line x1="145" y1="100" x2="100" y2="75" stroke="url(#gradientOrange)" stroke-width="0.8" opacity="0.3"/>
+  <line x1="55" y1="100" x2="100" y2="120" stroke="url(#gradientOrange)" stroke-width="0.8" opacity="0.3"/>
+  <line x1="145" y1="100" x2="100" y2="120" stroke="url(#gradientOrange)" stroke-width="0.8" opacity="0.3"/>
+  
+  <!-- Geometric tech accents -->
+  <polygon points="75,60 85,65 80,75" fill="none" stroke="url(#gradientBlue)" stroke-width="1.5" opacity="0.5"/>
+  <polygon points="125,60 115,65 120,75" fill="none" stroke="url(#gradientBlue)" stroke-width="1.5" opacity="0.5"/>
+  
+  <!-- Inner technical detail - hexagons -->
+  <g opacity="0.3">
+    <polygon points="100,45 105,48 105,54 100,57 95,54 95,48" fill="none" stroke="#0066cc" stroke-width="1"/>
+    <polygon points="100,130 105,133 105,139 100,142 95,139 95,133" fill="none" stroke="#ff6b35" stroke-width="1"/>
+  </g>
+</svg>

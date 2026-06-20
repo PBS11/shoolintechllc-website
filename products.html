@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products — ShoolinTech LLC</title>
+  <meta name="description" content="ShoolinTech AI-powered products. Siftify — the intelligent document analysis app that transforms complex documents into plain-English summaries.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .siftify-hero {
+      background: var(--dark);
+      padding: 80px 0 96px;
+      position: relative; overflow: hidden;
+    }
+    .siftify-hero-mesh {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 80% at 10% 50%, rgba(79,70,229,0.2) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 60% at 90% 20%, rgba(6,182,212,0.12) 0%, transparent 55%);
+    }
+    .siftify-hero .container { position: relative; z-index: 1; }
+    .siftify-hero-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+    .siftify-app-icon {
+      width: 100px; height: 100px; border-radius: 24px;
+      background: linear-gradient(135deg, var(--indigo) 0%, var(--cyan) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem; margin-bottom: 28px;
+      box-shadow: 0 20px 60px rgba(79,70,229,0.4);
+    }
+    .siftify-title { font-size: clamp(2.6rem, 5vw, 4rem); font-weight: 800; color: #fff; letter-spacing: -0.04em; margin-bottom: 16px; }
+    .siftify-subtitle { font-size: 1.2rem; color: rgba(255,255,255,0.6); line-height: 1.75; margin-bottom: 36px; max-width: 460px; }
+    .app-store-btn {
+      display: inline-flex; align-items: center; gap: 12px;
+      background: #000; color: #fff; padding: 13px 24px;
+      border-radius: 14px; font-family: inherit; font-size: 0.88rem;
+      border: 1.5px solid rgba(255,255,255,0.15); transition: all var(--transition);
+      text-decoration: none; cursor: pointer;
+    }
+    .app-store-btn:hover { background: #1a1a1a; border-color: rgba(255,255,255,0.3); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,0,0,0.4); }
+    .app-store-btn-icon { font-size: 1.6rem; }
+    .app-store-btn-text-top { font-size: 0.68rem; opacity: 0.7; line-height: 1; display: block; }
+    .app-store-btn-text-main { font-size: 1rem; font-weight: 700; line-height: 1.2; display: block; margin-top: 2px; }
+    .siftify-mockup {
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 28px; padding: 32px; backdrop-filter: blur(20px);
+    }
+    .mockup-label { font-size: 0.72rem; font-weight: 700; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 20px; }
+    .mockup-doc-types { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+    .mockup-doc-pill {
+      background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: var(--radius-md); padding: 14px 16px;
+      font-size: 0.88rem; color: rgba(255,255,255,0.6); font-weight: 500;
+      transition: all 0.3s;
+    }
+    .mockup-doc-pill:hover { background: rgba(79,70,229,0.12); border-color: rgba(79,70,229,0.3); color: #a5b4fc; }
+    .mockup-result {
+      background: linear-gradient(135deg, rgba(79,70,229,0.12) 0%, rgba(6,182,212,0.06) 100%);
+      border: 1px solid rgba(79,70,229,0.2); border-radius: var(--radius-md);
+      padding: 16px 18px;
+    }
+    .mockup-result-label { font-size: 0.72rem; font-weight: 700; color: #a5b4fc; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+    .mockup-result-lines { display: flex; flex-direction: column; gap: 8px; }
+    .mockup-line { height: 10px; border-radius: 5px; background: rgba(255,255,255,0.1); }
+    .mockup-line-short { width: 60%; }
+    .mockup-line-med   { width: 82%; }
+    .mockup-line-full  { width: 100%; }
+    .feature-section { padding: 96px 0; }
+    .feature-block { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; margin-bottom: 80px; }
+    .feature-block:last-child { margin-bottom: 0; }
+    .feature-block.reverse { direction: rtl; }
+    .feature-block.reverse > * { direction: ltr; }
+    .feature-block-visual {
+      background: var(--surface-2); border: 1px solid var(--border);
+      border-radius: var(--radius-xl); padding: 36px; min-height: 280px;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .feature-block-visual-dark {
+      background: var(--dark-3); border-color: var(--border-dark);
+    }
+    .feature-num { font-size: 4rem; font-weight: 900; color: var(--border); letter-spacing: -0.04em; margin-bottom: 8px; font-family: 'Plus Jakarta Sans', sans-serif; }
+    .feature-num-dark { color: rgba(255,255,255,0.06); }
+    @media (max-width: 768px) {
+      .siftify-hero-inner { grid-template-columns: 1fr; }
+      .siftify-mockup { display: none; }
+      .feature-block { grid-template-columns: 1fr; }
+      .feature-block.reverse { direction: ltr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Navigation ── -->
+  <nav class="navbar" id="navbar">
+    <div class="container">
+      <a href="index.html" class="nav-brand">
+        <img src="logo.svg" alt="ShoolinTech" class="nav-logo">
+        <span class="nav-wordmark">Shoolin<span>Tech</span></span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="products.html" class="active">Products</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="privacy.html">Privacy</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="contact.html" class="btn btn-primary btn-sm">Get Started</a>
+      </div>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ── Siftify Hero ── -->
+  <section class="siftify-hero">
+    <div class="siftify-hero-mesh"></div>
+    <div class="container">
+      <div class="siftify-hero-inner">
+        <div>
+          <div class="siftify-app-icon">📄</div>
+          <div class="hero-eyebrow" style="margin-bottom:20px;">
+            <span class="hero-eyebrow-dot"></span>
+            Available on iOS · Coming to Android
+          </div>
+          <h1 class="siftify-title">Siftify</h1>
+          <p class="siftify-subtitle">
+            Understand any document instantly. Siftify uses on-device AI to transform dense legal, medical, immigration, and financial documents into clear, plain-English summaries — privately, on your phone.
+          </p>
+          <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:center;">
+            <a href="#" class="app-store-btn" aria-label="Download on the App Store">
+              <span class="app-store-btn-icon"></span>
+              <span>
+                <span class="app-store-btn-text-top">Download on the</span>
+                <span class="app-store-btn-text-main">App Store</span>
+              </span>
+            </a>
+            <a href="privacy.html#siftify" class="btn btn-secondary btn-sm">Privacy Policy</a>
+          </div>
+          <div style="margin-top:40px;padding-top:28px;border-top:1px solid rgba(255,255,255,0.08);display:flex;gap:32px;flex-wrap:wrap;">
+            <div>
+              <div style="font-size:1.4rem;font-weight:800;color:#fff;">On-Device</div>
+              <div style="font-size:0.82rem;color:rgba(255,255,255,0.4);margin-top:2px;">AI Processing</div>
+            </div>
+            <div>
+              <div style="font-size:1.4rem;font-weight:800;color:#fff;">6 Types</div>
+              <div style="font-size:0.82rem;color:rgba(255,255,255,0.4);margin-top:2px;">Document Categories</div>
+            </div>
+            <div>
+              <div style="font-size:1.4rem;font-weight:800;color:#fff;">Private</div>
+              <div style="font-size:0.82rem;color:rgba(255,255,255,0.4);margin-top:2px;">Zero Cloud by Default</div>
+            </div>
+          </div>
+        </div>
+        <div class="siftify-mockup">
+          <div class="mockup-label">Supported Document Types</div>
+          <div class="mockup-doc-types">
+            <div class="mockup-doc-pill">⚖️ Legal</div>
+            <div class="mockup-doc-pill">🏥 Medical</div>
+            <div class="mockup-doc-pill">🛂 Immigration</div>
+            <div class="mockup-doc-pill">💰 Financial</div>
+            <div class="mockup-doc-pill">📖 Manuals</div>
+            <div class="mockup-doc-pill">📄 General</div>
+          </div>
+          <div class="mockup-result">
+            <div class="mockup-result-label">✨ AI Summary Generated</div>
+            <div class="mockup-result-lines">
+              <div class="mockup-line mockup-line-full"></div>
+              <div class="mockup-line mockup-line-med"></div>
+              <div class="mockup-line mockup-line-full"></div>
+              <div class="mockup-line mockup-line-short"></div>
+              <div class="mockup-line mockup-line-full"></div>
+              <div class="mockup-line mockup-line-med"></div>
+            </div>
+          </div>
+          <div style="margin-top:20px;display:flex;gap:10px;">
+            <div class="platform-pill" style="background:rgba(52,211,153,0.08);border-color:rgba(52,211,153,0.2);color:#34d399;">🔒 On-Device AI</div>
+            <div class="platform-pill">🔊 Text-to-Speech</div>
+            <div class="platform-pill">🎙️ Voice Q&amp;A</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Feature Highlights ── -->
+  <section class="feature-section">
+    <div class="container">
+
+      <div class="feature-block reveal">
+        <div>
+          <div class="section-label">Privacy First</div>
+          <h2 class="section-title">Your Documents Stay on Your Device</h2>
+          <p class="section-body" style="margin-bottom:20px;">
+            Siftify processes documents locally using Llama 3.2 (1B parameters) running entirely on your phone. No document content is sent to any server unless you explicitly choose cloud analysis.
+          </p>
+          <p class="section-body">
+            When cloud processing is needed for complex scanned documents, we show a clear consent modal before any data leaves your device — you're always in control.
+          </p>
+          <div style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap;">
+            <span class="tag" style="padding:8px 14px;">🔒 On-Device Llama 3.2</span>
+            <span class="tag" style="padding:8px 14px;">☁️ Optional Cloud with Consent</span>
+            <span class="tag" style="padding:8px 14px;">📵 Works Offline</span>
+          </div>
+        </div>
+        <div class="feature-block-visual feature-block-visual-dark">
+          <div class="feature-num feature-num-dark">01</div>
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <div class="pipeline-step" style="background:rgba(52,211,153,0.06);border-color:rgba(52,211,153,0.2);">
+              <span class="step-dot green"></span>
+              <span class="step-text" style="color:rgba(255,255,255,0.7);">Document loaded locally</span>
+              <span class="step-badge" style="background:rgba(52,211,153,0.12);color:#6ee7b7;">On-Device</span>
+            </div>
+            <div class="pipeline-step" style="background:rgba(52,211,153,0.06);border-color:rgba(52,211,153,0.2);">
+              <span class="step-dot green"></span>
+              <span class="step-text" style="color:rgba(255,255,255,0.7);">Text extracted on-device</span>
+              <span class="step-badge" style="background:rgba(52,211,153,0.12);color:#6ee7b7;">Private</span>
+            </div>
+            <div class="pipeline-step" style="background:rgba(52,211,153,0.06);border-color:rgba(52,211,153,0.2);">
+              <span class="step-dot green"></span>
+              <span class="step-text" style="color:rgba(255,255,255,0.7);">Llama 3.2 generates summary</span>
+              <span class="step-badge" style="background:rgba(52,211,153,0.12);color:#6ee7b7;">Local AI</span>
+            </div>
+            <div class="pipeline-step" style="opacity:0.45;">
+              <span class="step-dot" style="background:#555;box-shadow:none;"></span>
+              <span class="step-text" style="color:rgba(255,255,255,0.4);">Cloud (only if you consent)</span>
+              <span class="step-badge" style="background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.3);">Optional</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-block reverse reveal">
+        <div>
+          <div class="section-label">Intelligence</div>
+          <h2 class="section-title">Understands Every Document Type</h2>
+          <p class="section-body" style="margin-bottom:20px;">
+            Siftify uses specialized AI prompts for each document category — so a medical lab report is summarized differently from an immigration notice or a lease agreement.
+          </p>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:12px;">
+            <li style="display:flex;gap:12px;font-size:0.95rem;color:var(--text-2);">
+              <span style="color:var(--indigo);font-weight:700;">⚖️</span>
+              <span><strong style="color:var(--text);">Legal</strong> — Contracts, leases, deeds, court filings</span>
+            </li>
+            <li style="display:flex;gap:12px;font-size:0.95rem;color:var(--text-2);">
+              <span style="color:var(--indigo);font-weight:700;">🏥</span>
+              <span><strong style="color:var(--text);">Medical</strong> — Health reports, lab results, patient records</span>
+            </li>
+            <li style="display:flex;gap:12px;font-size:0.95rem;color:var(--text-2);">
+              <span style="color:var(--indigo);font-weight:700;">🛂</span>
+              <span><strong style="color:var(--text);">Immigration</strong> — USCIS notices, visas, work authorizations</span>
+            </li>
+            <li style="display:flex;gap:12px;font-size:0.95rem;color:var(--text-2);">
+              <span style="color:var(--indigo);font-weight:700;">💰</span>
+              <span><strong style="color:var(--text);">Finance</strong> — Tax docs, statements, balance sheets</span>
+            </li>
+            <li style="display:flex;gap:12px;font-size:0.95rem;color:var(--text-2);">
+              <span style="color:var(--indigo);font-weight:700;">📖</span>
+              <span><strong style="color:var(--text);">Manuals</strong> — User guides, technical documentation</span>
+            </li>
+          </ul>
+        </div>
+        <div class="feature-block-visual">
+          <div class="feature-num">02</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="height:12px;background:linear-gradient(90deg,rgba(79,70,229,0.3),rgba(6,182,212,0.3));border-radius:6px;width:100%;"></div>
+            <div style="height:10px;background:var(--border);border-radius:5px;width:78%;"></div>
+            <div style="height:10px;background:var(--border);border-radius:5px;width:92%;"></div>
+            <div style="height:10px;background:var(--border);border-radius:5px;width:65%;"></div>
+            <div style="margin-top:8px;padding:16px;background:rgba(79,70,229,0.06);border:1px solid rgba(79,70,229,0.12);border-radius:var(--radius-md);">
+              <div style="font-size:0.78rem;font-weight:700;color:var(--indigo);margin-bottom:10px;">KEY FINDINGS</div>
+              <div style="height:8px;background:rgba(79,70,229,0.15);border-radius:4px;width:100%;margin-bottom:7px;"></div>
+              <div style="height:8px;background:rgba(79,70,229,0.1);border-radius:4px;width:85%;margin-bottom:7px;"></div>
+              <div style="height:8px;background:rgba(79,70,229,0.1);border-radius:4px;width:70%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-block reveal">
+        <div>
+          <div class="section-label">Interactivity</div>
+          <h2 class="section-title">Ask Questions, Hear Answers</h2>
+          <p class="section-body" style="margin-bottom:20px;">
+            Don't just read a summary — ask follow-up questions by voice. Siftify's voice Q&amp;A feature lets you speak naturally and get targeted answers from your document's content.
+          </p>
+          <p class="section-body">
+            Every section of the summary can be read aloud via text-to-speech, so you can listen while commuting, cooking, or on the go.
+          </p>
+          <div style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap;">
+            <span class="tag" style="padding:8px 14px;">🎙️ Voice Q&amp;A</span>
+            <span class="tag" style="padding:8px 14px;">🔊 Section-by-Section TTS</span>
+            <span class="tag" style="padding:8px 14px;">📤 Share via Email or PDF</span>
+          </div>
+        </div>
+        <div class="feature-block-visual feature-block-visual-dark">
+          <div class="feature-num feature-num-dark">03</div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div style="background:rgba(79,70,229,0.1);border:1px solid rgba(79,70,229,0.2);border-radius:12px;padding:14px 16px;">
+              <div style="font-size:0.75rem;color:#a5b4fc;font-weight:600;margin-bottom:6px;">YOU ASKED</div>
+              <div style="font-size:0.9rem;color:rgba(255,255,255,0.7);">"What are the main obligations in this contract?"</div>
+            </div>
+            <div style="display:flex;gap:6px;align-items:center;padding:0 4px;">
+              <div style="height:1px;flex:1;background:rgba(255,255,255,0.06);"></div>
+              <div style="font-size:0.7rem;color:rgba(255,255,255,0.2);">AI RESPONSE</div>
+              <div style="height:1px;flex:1;background:rgba(255,255,255,0.06);"></div>
+            </div>
+            <div style="background:rgba(6,182,212,0.06);border:1px solid rgba(6,182,212,0.15);border-radius:12px;padding:14px 16px;">
+              <div style="display:flex;flex-direction:column;gap:7px;">
+                <div style="height:9px;background:rgba(6,182,212,0.2);border-radius:4px;width:100%;"></div>
+                <div style="height:9px;background:rgba(6,182,212,0.12);border-radius:4px;width:88%;"></div>
+                <div style="height:9px;background:rgba(6,182,212,0.12);border-radius:4px;width:74%;"></div>
+              </div>
+            </div>
+            <div style="display:flex;justify-content:center;margin-top:4px;">
+              <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--indigo),var(--cyan));display:flex;align-items:center;justify-content:center;font-size:1.3rem;box-shadow:0 8px 24px rgba(79,70,229,0.4);">🎙️</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Privacy CTA ── -->
+  <section class="section section-alt">
+    <div class="container" style="text-align:center;">
+      <div class="section-label reveal">Transparency</div>
+      <h2 class="section-title reveal" style="max-width:520px;margin:0 auto 16px;">We Take Your Privacy Seriously</h2>
+      <p class="section-body section-body-center reveal" style="margin-bottom:36px;">
+        Read our full privacy policy to understand exactly how Siftify handles your data — including what stays on your device and what (optionally) goes to the cloud.
+      </p>
+      <a href="privacy.html#siftify" class="btn btn-outline btn-lg reveal">Read Siftify Privacy Policy</a>
+    </div>
+  </section>
+
+  <!-- ── CTA ── -->
+  <section class="cta-band">
+    <div class="container">
+      <h2>Want to Build Your Own AI App?</h2>
+      <p>We turn AI ideas into polished, App Store-ready products. Let's talk.</p>
+      <div class="cta-band-actions">
+        <a href="contact.html" class="btn btn-white btn-lg">Start a Project</a>
+        <a href="services.html" class="btn btn-secondary btn-lg">Our Services</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <img src="logo.svg" alt="ShoolinTech">
+            <span class="footer-logo-text">ShoolinTech LLC</span>
+          </div>
+          <p>AI consultancy and product development studio based in Dallas, TX.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Services</h5>
+          <ul>
+            <li><a href="services.html">AI Consultancy</a></li>
+            <li><a href="services.html">Solution Architecture</a></li>
+            <li><a href="services.html">Product Development</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Company</h5>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Contact</h5>
+          <ul>
+            <li><a href="mailto:info@shoolintechllc.com">info@shoolintechllc.com</a></li>
+            <li><a href="tel:+12145045513">+1 (214) 504-5513</a></li>
+            <li style="color:rgba(255,255,255,0.35);">Dallas, TX</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 ShoolinTech LLC. All rights reserved.</p>
+        <p><a href="privacy.html">Privacy Policy</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
