@@ -1,113 +1,90 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-
+  <!-- Transparent background — works on both light navbar and dark footer -->
   <defs>
-    <!-- Glow for tip nodes -->
-    <filter id="tipGlow" x="-80%" y="-80%" width="260%" height="260%">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="2.8" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    <filter id="tg" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
-    <!-- Subtle glow for junction nodes -->
-    <filter id="jGlow" x="-60%" y="-60%" width="220%" height="220%">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="1.8" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    <filter id="sg" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
-    <!-- Prong gradient: deeper navy at base → electric blue at tip -->
-    <linearGradient id="prongGrad" x1="0.5" y1="1" x2="0.5" y2="0">
-      <stop offset="0%"   stop-color="#0f2744"/>
-      <stop offset="100%" stop-color="#1d5fa8"/>
+    <!-- Prong gradient: indigo base → cyan tip (visible on white & dark) -->
+    <linearGradient id="pg" x1="0.5" y1="1" x2="0.5" y2="0">
+      <stop offset="0%"   stop-color="#1e3a6e"/>
+      <stop offset="45%"  stop-color="#1d68b8"/>
+      <stop offset="100%" stop-color="#00ccff"/>
     </linearGradient>
-    <!-- Crossbar / handle gradient -->
-    <linearGradient id="bodyGrad" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%"   stop-color="#0a1e35"/>
-      <stop offset="50%"  stop-color="#122a47"/>
-      <stop offset="100%" stop-color="#0a1e35"/>
+    <linearGradient id="pgs" x1="0.5" y1="1" x2="0.5" y2="0">
+      <stop offset="0%"   stop-color="#1e3a6e"/>
+      <stop offset="45%"  stop-color="#1560a8"/>
+      <stop offset="100%" stop-color="#00b8e8"/>
+    </linearGradient>
+    <linearGradient id="sh" x1="0.5" y1="0" x2="0.5" y2="1">
+      <stop offset="0%"   stop-color="#1a3560"/>
+      <stop offset="100%" stop-color="#0d1e38"/>
     </linearGradient>
   </defs>
 
-  <!-- ── Background: deep navy rounded square ── -->
-  <rect width="100" height="100" rx="22" fill="#07131f"/>
+  <!-- Left prong -->
+  <g transform="rotate(-37, 50, 58)">
+    <rect x="43" y="25" width="14" height="33" rx="7" fill="url(#pgs)"/>
+    <polygon points="50,14 41,29 44,25 56,25 59,29" fill="#00b8e8"/>
+    <line x1="50" y1="25" x2="50" y2="58" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.3"/>
+  </g>
 
-  <!-- ── Subtle radial ambient glow behind trident ── -->
-  <circle cx="50" cy="48" r="38" fill="url(#bgGlow)" opacity="0.06"/>
-  <defs>
-    <radialGradient id="bgGlow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#00c8ff" stop-opacity="1"/>
-      <stop offset="100%" stop-color="#00c8ff" stop-opacity="0"/>
-    </radialGradient>
-  </defs>
+  <!-- Right prong -->
+  <g transform="rotate(37, 50, 58)">
+    <rect x="43" y="25" width="14" height="33" rx="7" fill="url(#pgs)"/>
+    <polygon points="50,14 41,29 44,25 56,25 59,29" fill="#00b8e8"/>
+    <line x1="50" y1="25" x2="50" y2="58" stroke="white" stroke-width="1.5" stroke-linecap="round" opacity="0.3"/>
+  </g>
 
-  <!-- ── TRIDENT BODY ── -->
+  <!-- Center prong -->
+  <rect x="43" y="18" width="14" height="40" rx="7" fill="url(#pg)"/>
+  <polygon points="50,9 41,24 44,18 56,18 59,24" fill="#00ccff"/>
+  <circle cx="50" cy="11" r="6" fill="#00ccff" opacity="0.2" filter="url(#tg)"/>
+  <line x1="50" y1="18" x2="50" y2="58" stroke="white" stroke-width="2" stroke-linecap="round" opacity="0.35"/>
 
-  <!-- Center prong (tallest — straight up) -->
-  <!-- Diamond-spear shape: narrow tip, slight taper to broader base -->
-  <polygon points="50,9  46,32  44,57  56,57  54,32" fill="url(#prongGrad)"/>
+  <!-- Shaft -->
+  <rect x="45" y="58" width="10" height="22" rx="5" fill="url(#sh)"/>
+  <polygon points="44,78 56,78 50,87" fill="#0d1e38"/>
+  <circle cx="50" cy="58" r="4" fill="white" opacity="0.45"/>
 
-  <!-- Left prong (angles upper-left from crossbar) -->
-  <!-- Emerges from left crossbar area, tapers to tip at upper-left -->
-  <polygon points="16,25  20,40  22,57  33,57" fill="url(#prongGrad)"/>
+  <!-- Neural network (right side, compact) -->
+  <!-- Edges -->
+  <line x1="72" y1="22" x2="85" y2="14" stroke="#0090b8" stroke-width="1.2" opacity="0.55"/>
+  <line x1="72" y1="22" x2="82" y2="34" stroke="#007898" stroke-width="1" opacity="0.45"/>
+  <line x1="85" y1="14" x2="82" y2="34" stroke="#0082a0" stroke-width="1" opacity="0.40"/>
+  <line x1="82" y1="34" x2="90" y2="46" stroke="#006070" stroke-width="0.9" opacity="0.35"/>
+  <line x1="85" y1="14" x2="94" y2="26" stroke="#007898" stroke-width="0.9" opacity="0.38"/>
+  <line x1="94" y1="26" x2="90" y2="46" stroke="#005868" stroke-width="0.8" opacity="0.32"/>
 
-  <!-- Right prong (mirror of left) -->
-  <polygon points="84,25  80,40  78,57  67,57" fill="url(#prongGrad)"/>
+  <!-- Nodes -->
+  <!-- Junction with right prong tip -->
+  <circle cx="72" cy="22" r="4"   fill="#0090b8"/>
+  <circle cx="72" cy="22" r="2"   fill="#00c0d8"/>
 
-  <!-- Crossbar (horizontal bar connecting all three prongs) -->
-  <rect x="14" y="54" width="72" height="6" rx="3" fill="#0d2238"/>
+  <!-- Top dominant node -->
+  <circle cx="85" cy="14" r="7"   fill="#00c0ff" opacity="0.18" filter="url(#tg)"/>
+  <circle cx="85" cy="14" r="4.5" fill="#00ccff"/>
+  <circle cx="85" cy="14" r="2.2" fill="#a8f0ff"/>
+  <circle cx="85" cy="14" r="0.8" fill="white"/>
 
-  <!-- Shaft (vertical handle below crossbar) -->
-  <rect x="46" y="60" width="8" height="28" rx="4" fill="#0d2238"/>
+  <!-- Right mid node -->
+  <circle cx="94" cy="26" r="3.5" fill="#0090b8"/>
+  <circle cx="94" cy="26" r="1.6" fill="#00b8d8"/>
 
-  <!-- Base ornament (rounded butt cap) -->
-  <rect x="41" y="87" width="18" height="6" rx="3" fill="#0a1e35"/>
-  <rect x="44" y="92" width="12" height="3" rx="1.5" fill="#091829"/>
+  <!-- Lower mid node -->
+  <circle cx="82" cy="34" r="3.8" fill="#0088b0"/>
+  <circle cx="82" cy="34" r="1.8" fill="#00b0cc"/>
 
-  <!-- ── NEURAL NETWORK CONNECTIONS ── -->
-  <!-- These are the "AI data stream" element fused into the trident -->
+  <!-- Bottom node -->
+  <circle cx="90" cy="46" r="3"   fill="#005c78"/>
+  <circle cx="90" cy="46" r="1.3" fill="#0088a0"/>
 
-  <!-- Arc connecting the three tips (top curve) -->
-  <path d="M 16,25 Q 50,12 84,25" stroke="#00c8ff" stroke-width="0.9" fill="none" opacity="0.35"/>
-
-  <!-- Left tip → Center tip -->
-  <line x1="16" y1="25" x2="50" y2="9" stroke="#00c8ff" stroke-width="0.8" opacity="0.4"/>
-  <!-- Center tip → Right tip -->
-  <line x1="50" y1="9" x2="84" y2="25" stroke="#00c8ff" stroke-width="0.8" opacity="0.4"/>
-
-  <!-- Tips → Center junction (converging lines) -->
-  <line x1="16" y1="25" x2="50" y2="57" stroke="#00c8ff" stroke-width="0.55" opacity="0.16"/>
-  <line x1="84" y1="25" x2="50" y2="57" stroke="#00c8ff" stroke-width="0.55" opacity="0.16"/>
-
-  <!-- Left tip → Right junction and vice versa (cross-network) -->
-  <line x1="16" y1="25" x2="78" y2="57" stroke="#00c8ff" stroke-width="0.4" opacity="0.09"/>
-  <line x1="84" y1="25" x2="22" y2="57" stroke="#00c8ff" stroke-width="0.4" opacity="0.09"/>
-
-  <!-- ── GLOWING NODES ── -->
-
-  <!-- Center tip — largest, primary node -->
-  <circle cx="50" cy="9" r="7"   fill="#00c8ff" opacity="0.22" filter="url(#tipGlow)"/>
-  <circle cx="50" cy="9" r="4.5" fill="#00d4ff"/>
-  <circle cx="50" cy="9" r="2.2" fill="#e0f8ff"/>
-
-  <!-- Left tip -->
-  <circle cx="16" cy="25" r="6"   fill="#00c8ff" opacity="0.2" filter="url(#tipGlow)"/>
-  <circle cx="16" cy="25" r="3.8" fill="#00c8ff"/>
-  <circle cx="16" cy="25" r="1.7" fill="#cff4ff"/>
-
-  <!-- Right tip -->
-  <circle cx="84" cy="25" r="6"   fill="#00c8ff" opacity="0.2" filter="url(#tipGlow)"/>
-  <circle cx="84" cy="25" r="3.8" fill="#00c8ff"/>
-  <circle cx="84" cy="25" r="1.7" fill="#cff4ff"/>
-
-  <!-- Center junction (crossbar center) -->
-  <circle cx="50" cy="57" r="4.2" fill="#07131f" stroke="#00a8d8" stroke-width="1.8" filter="url(#jGlow)"/>
-  <circle cx="50" cy="57" r="1.6" fill="#00c8ff"/>
-
-  <!-- Left junction (left crossbar ~1/3) -->
-  <circle cx="25" cy="57" r="2.8" fill="#07131f" stroke="#0080a8" stroke-width="1.2"/>
-  <circle cx="25" cy="57" r="0.9" fill="#00a8d8"/>
-
-  <!-- Right junction (right crossbar ~2/3) -->
-  <circle cx="75" cy="57" r="2.8" fill="#07131f" stroke="#0080a8" stroke-width="1.2"/>
-  <circle cx="75" cy="57" r="0.9" fill="#00a8d8"/>
-
-  <!-- Base node -->
-  <circle cx="50" cy="90" r="2.2" fill="#07131f" stroke="#005c7a" stroke-width="1.2"/>
-
+  <!-- Center prong tip node (on top of arrowhead) -->
+  <circle cx="50" cy="11" r="4.5" fill="#00ccff" filter="url(#sg)"/>
+  <circle cx="50" cy="11" r="2.8" fill="#a8f2ff"/>
+  <circle cx="50" cy="11" r="1"   fill="white"/>
 </svg>
